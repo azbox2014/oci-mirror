@@ -46,7 +46,8 @@
 |------------|------|--------|
 | `HIERARCHICAL_DOCKER_USER` | 有层级私有仓库用户名 | `your-username` |
 | `HIERARCHICAL_DOCKER_TOKEN` | 有层级私有仓库访问令牌 | `your-token` |
-| `HIERARCHICAL_PRIVATE_REGISTRY` | 有层级目标仓库地址 | `registry.cn-beijing.aliyuncs.com/your-namespace` |
+| `HIERARCHICAL_BASE_URL` | 有层级目标仓库基础地址 | `registry.cn-beijing.aliyuncs.com/your-namespace` |
+| `HIERARCHICAL_PRIVATE_REGISTRY` | 有层级私有仓库注册地址 | `registry.cn-beijing.aliyuncs.com` |
 
 ##### 无子层级同步模式
 适用于简化的镜像组织结构
@@ -55,7 +56,8 @@
 |------------|------|--------|
 | `FLAT_DOCKER_USER` | 无层级私有仓库用户名 | `flat-username` |
 | `FLAT_DOCKER_TOKEN` | 无层级私有仓库访问令牌 | `flat-token` |
-| `FLAT_PRIVATE_REGISTRY` | 无层级目标仓库地址 | `registry.cn-hangzhou.aliyuncs.com/flat-namespace` |
+| `FLAT_BASE_URL` | 无层级目标仓库基础地址 | `registry.cn-hangzhou.aliyuncs.com/flat-namespace` |
+| `FLAT_PRIVATE_REGISTRY` | 无层级私有仓库注册地址 | `registry.cn-hangzhou.aliyuncs.com` |
 
 **说明**: 所有开源镜像均无需额外认证，可直接同步公有镜像。
 

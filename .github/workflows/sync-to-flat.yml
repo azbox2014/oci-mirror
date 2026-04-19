@@ -13,23 +13,18 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Get registry
-        id: registry
-        run: |
-          echo "value=$(echo ${{ secrets.FLAT_PRIVATE_REGISTRY }} | sed -E 's;/.*$;;g')" >> $GITHUB_OUTPUT
-
       - name: Login to Private Registry
         uses: docker/login-action@v3
         with:
-          registry: ${{ steps.registry.outputs.value }}
-          username: ${{ secrets.PRIVATE_REGISTRY_USER }}
-          password: ${{ secrets.PRIVATE_REGISTRY_PASS }}
+          registry: ${{ secrets.FLAT_PRIVATE_REGISTRY }}
+          username: ${{ secrets.FLAT_DOCKER_USER }}
+          password: ${{ secrets.FLAT_DOCKER_TOKEN }}
 
       - name: 🚀 Sync Image
         run: |
           SRC="${{ github.event.inputs.source_image }}"
           TRIM_NAME="$(echo ${SRC} | sed -E 's;/;_;g')"
-          DEST="${{ secrets.FLAT_PRIVATE_REGISTRY }}/${TRIM_NAME}"
+          DEST="${{ secrets.FLAT_BASE_URL }}/${TRIM_NAME}"
 
           echo "Starting sync: $SRC -> $DEST"
           
