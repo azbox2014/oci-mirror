@@ -13,6 +13,18 @@ jobs:
   sync:
     runs-on: ubuntu-latest 
     steps:
+      - name: Get registry
+        id: registry
+        run: |
+          echo "value=$(echo ${{ secrets.FLAT_PRIVATE_REGISTRY }} | sed -E 's;/.*$;;g')" >> $GITHUB_OUTPUT
+
+      - name: Login to Private Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ steps.registry.outputs.value }}
+          username: ${{ secrets.PRIVATE_REGISTRY_USER }}
+          password: ${{ secrets.PRIVATE_REGISTRY_PASS }}
+
       - name: 🚀 Sync Image using Skopeo
         run: |
           SRC="${{ github.event.inputs.source_image }}"
@@ -37,12 +49,11 @@ jobs:
 
             echo "⚠️ skopeo failed, fallback to regctl..."
 
-            set -e
             docker run --rm \
+              -v ~/.docker/config.json:/root/.docker/config.json:ro \
               regclient/regctl:latest \
               image copy \
               --format docker \
-              --user "${{ secrets.HIERARCHICAL_DOCKER_USER }}:${{ secrets.HIERARCHICAL_DOCKER_TOKEN }}" \
               "$SRC" \
               "$DEST"
           fi
